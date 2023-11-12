@@ -8,6 +8,15 @@ export default class HomeScreen extends Component {
     };
   }
 
+
+  formulario = () => {
+    return (
+      <View style={stylesFormulario.fondo}>
+      </View>
+      
+    );
+  };
+
   render() {
     {/*<ImageBackground source={image} resizeMode="cover" style={styles.image}>
                 <Image style={styles.logo} source={logo}/>    
@@ -17,15 +26,15 @@ export default class HomeScreen extends Component {
     const image =  require("../Imagenes/Background.jpg");
     const logo = require("../Imagenes/cucei-logo.png");
     return (
-      <View style={styles.container}>
-        <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-          <View style={styles.containerHigh}>
-            <Image style={styles.logo} source={logo} />
+      <View style={stylesMain.container}>
+        <ImageBackground source={image} resizeMode="cover" style={stylesMain.image}>
+          <View style={stylesMain.containerHigh}>
+            <Image style={stylesMain.logo} source={logo} />
           </View>
-          <View style={styles.containerMiddle}>
-            <Text style={styles.text}>Inside</Text>
+          <View style={stylesMain.containerMiddle}>
+              <this.formulario/>
           </View>
-          <View style={styles.container}>
+          <View style={stylesMain.container}>
 
           </View>
         </ImageBackground>
@@ -34,7 +43,19 @@ export default class HomeScreen extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+const stylesFormulario = StyleSheet.create({
+  fondo: {
+    flex: 1,
+    width: 350,
+    borderRadius: 30,
+    resizeMode: 'center',
+    borderColor: "#e27743",
+    backgroundColor: "#e27743",
+  },
+});
+
+
+const stylesMain = StyleSheet.create({
     container: {
         flex: 1, // ocupar todo el espacio que pueda
         flexDirection: "column", //define como alineara los items (default: column (columna))
@@ -47,17 +68,19 @@ const styles = StyleSheet.create({
       flex: 1, // ocupar todo el espacio que pueda
       flexDirection: "row", //define como alineara los items (default: column (columna))
       //los reverse, sera al reves (final es el inicio, etc)
+      alignItems: "center", //define si se alinea al inicio, en medio o al final, y delimita
+      //--si esta al centro, no podra salirse de ahi, y asi sucesivamente.
+      //justifyContent: "flex-start", // igual a flexDirection, pero en forma contraria
+      //--ejemplo, si esta en column ahora sera en row, y vicerversa.
+    },
+    containerMiddle: {
+      flex: 2, // ocupar todo el espacio que pueda
+      flexDirection: "colummn", //define como alineara los items (default: column (columna))
+      //los reverse, sera al reves (final es el inicio, etc)
       alignItems: "center", //define si se alinea al inicio, en medio o al final
       //justifyContent: "flex-start", // alinea los elementos, contrariamente a flexDirection
       //ejemplo, si esta en column ahora sera en row, y vicerversa.
-    },
-    containerMiddle: {
-      flex: 3, // ocupar todo el espacio que pueda
-      flexDirection: "row", //define como alineara los items (default: column (columna))
-      //los reverse, sera al reves (final es el inicio, etc)
-      //alignItems: "center", //define si se alinea al inicio, en medio o al final
-      //justifyContent: "flex-start", // alinea los elementos, contrariamente a flexDirection
-      //ejemplo, si esta en column ahora sera en row, y vicerversa.
+      //backgroundColor: "white"
     },
     image: {
         flex: 1, 

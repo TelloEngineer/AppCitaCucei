@@ -5,6 +5,12 @@ export default class FillAppointment extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: 0,
+      nombre: "",
+      entrada: 0,
+      vehiculo: "",
+      hora: "",
+      fecha: "",
     };
   }
 

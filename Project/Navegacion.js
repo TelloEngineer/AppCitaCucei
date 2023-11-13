@@ -3,6 +3,9 @@ import { View, Text } from 'react-native';
 import HomeScreen from './HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import FillCarData from './Crear/FillCarData';
+import FillAppointment from './Crear/FillAppointment';
+import SearchAppointment from './Editar/SearchAppointment';
 
 export default class Navegacion extends Component {
   constructor(props) {
@@ -38,8 +41,8 @@ export default class Navegacion extends Component {
       <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
-          <Tab.Screen name='Crear' component={this.Crear}/>
-          <Tab.Screen name='Editar' component={this.Editar}/>
+          <Tab.Screen name='Crear' component={this.Crear} options={{ headerShown: false }} />
+          <Tab.Screen name='Editar' component={this.Editar} options={{ headerShown: false }} />
         </Tab.Navigator>
       </NavigationContainer>
     );

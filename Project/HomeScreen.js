@@ -19,54 +19,59 @@ export default class HomeScreen extends Component {
   }
 
   formulario = () => {
-    // "#063970"
-    const Click1 = () => {
-      console.log("diste click al boton prueba");
-    }
+      const navigation = this.props.navigation;
+      
+      const Crear = () => {
+        console.log("diste click al boton prueba");
+        navigation.navigate("Crear");
+      }
 
-    
+      const Editar = () => {
+        console.log("diste click al boton prueba");
+        navigation.navigate("Editar");
+      }
 
-    const Boton = ({ text, descripcion, onpress: Function }) => {
+      const Boton = ({ text, descripcion, onpress: Function }) => {
 
-      return (
-        <TouchableOpacity style={{
-          width: 300,
-          height: 50,
-          borderRadius: 30,
-        }} onPress={Function}>
-          <View style={{
+        return (
+          <TouchableOpacity style={{
             width: 300,
             height: 50,
-            borderWidth: 2,
-            borderColor: "#063970",
-            backgroundColor: "#063970",
             borderRadius: 30,
-          }}>
-            <Text style={{
-              color: "white",
-              fontWeight: "bold",
-              fontSize: 16,
-              textAlign: "center",
-              textAlignVertical: "center"
-            }}>{text}</Text>
-            <Text style={{
-              color: "white",
-              fontSize: 16,
-              textAlign: "center",
-              textAlignVertical: "center"
-            }}>{descripcion}</Text>
-          </View>
-        </TouchableOpacity>
-      );
-    };
+          }} onPress={Function}>
+            <View style={{
+              width: 300,
+              height: 50,
+              borderWidth: 2,
+              borderColor: "#063970",
+              backgroundColor: "#063970",
+              borderRadius: 30,
+            }}>
+              <Text style={{
+                color: "white",
+                fontWeight: "bold",
+                fontSize: 16,
+                textAlign: "center",
+                textAlignVertical: "center"
+              }}>{text}</Text>
+              <Text style={{
+                color: "white",
+                fontSize: 16,
+                textAlign: "center",
+                textAlignVertical: "center"
+              }}>{descripcion}</Text>
+            </View>
+          </TouchableOpacity>
+        );
+      };
 
     return (
       <View style={stylesFormulario.fondo}>
         <View style={stylesFormulario.container}>
-          <Boton text="Crear Cita" descripcion="Crea cita para entrar con tu vehiculo" onpress={Click1} />
+          <Boton text="Crear Cita" descripcion="Crea cita para entrar con tu vehiculo" onpress={Crear} />
         </View>
         <View style={[stylesFormulario.container]}>
-          <Boton text="Editar Cita" descripcion="Modifica alguna cita existente" onpress={Click1} />
+          <Boton text="Editar Cita" descripcion="Modifica alguna cita existente" onpress={Editar} />
         </View>
       </View>
 

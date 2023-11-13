@@ -18,8 +18,8 @@ export default class Navegacion extends Component {
     const Nav = createNativeStackNavigator();
     return(
         <Nav.Navigator>
-            <Nav.Screen name='Datos del Vehiculo' component={FillCarData}/>
-            <Nav.Screen name='Datos de la cita' component={FillAppointment}/>
+          <Nav.Screen name='Datos del Vehiculo' component={FillCarData}/>
+          <Nav.Screen name='Datos de la cita' component={FillAppointment} />
         </Nav.Navigator>
     );
   }

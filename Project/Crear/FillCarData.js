@@ -13,7 +13,15 @@ export default class FillCarData extends Component {
   }
 
   next = () => {
-    console.log(this.state.placas);
+    const navigation = this.props.navigation;
+
+    console.log(this.state);
+    navigation.navigate("Datos de la cita", {
+      placas: this.state.placas,
+      marca: this.state.marca,
+      color: this.state.color,
+      tipo: this.state.tipo
+    });
   }
 
   Accept = () => {

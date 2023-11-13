@@ -17,7 +17,7 @@ export default class FillAppointment extends Component {
   render() {
     return (
       <View>
-        <Text> FillAppointment </Text>
+        <Text style={{color: "red"}}> hola: {this.props.route.params.color} </Text>
       </View>
     );
   }

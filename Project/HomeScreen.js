@@ -8,7 +8,7 @@ export default class HomeScreen extends Component {
     };
   }
 
-  instruction = () =>{
+  instruction = () => {
     return (
       <View style={stylesInstruction.fondo}>
         <Text>Nota:</Text>
@@ -24,7 +24,9 @@ export default class HomeScreen extends Component {
       console.log("diste click al boton prueba");
     }
 
-    const Boton = ({text, descripcion, onpress: Function}) => {
+    
+
+    const Boton = ({ text, descripcion, onpress: Function }) => {
 
       return (
         <TouchableOpacity style={{
@@ -56,7 +58,7 @@ export default class HomeScreen extends Component {
           </View>
         </TouchableOpacity>
       );
-    };  
+    };
 
     return (
       <View style={stylesFormulario.fondo}>
@@ -64,7 +66,7 @@ export default class HomeScreen extends Component {
           <Boton text="Crear Cita" descripcion="Crea cita para entrar con tu vehiculo" onpress={Click1} />
         </View>
         <View style={[stylesFormulario.container]}>
-          <Boton text="Editar Cita" descripcion="Modifica alguna cita existente" onpress={Click1}/>
+          <Boton text="Editar Cita" descripcion="Modifica alguna cita existente" onpress={Click1} />
         </View>
       </View>
 
@@ -89,7 +91,7 @@ export default class HomeScreen extends Component {
             <this.formulario />
           </View>
           <View style={stylesMain.containerLow}>
-            <this.instruction/>
+            <this.instruction />
           </View>
         </ImageBackground>
       </View>
@@ -124,7 +126,7 @@ const stylesFormulario = StyleSheet.create({
 
     flexDirection: "column",
   },
-  container:{
+  container: {
     flex: 1, // ocupar todo el espacio que pueda
     flexDirection: "row", //define como alineara los items (default: column (columna))
     //los reverse, sera al reves (final es el inicio, etc)

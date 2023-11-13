@@ -11,6 +11,25 @@ export default class Navegacion extends Component {
     };
   }
 
+  Crear = () => {
+    const Nav = createNativeStackNavigator();
+    return(
+        <Nav.Navigator>
+            <Nav.Screen name='Datos del Vehiculo' component={FillCarData}/>
+            <Nav.Screen name='Datos de la cita' component={FillAppointment}/>
+        </Nav.Navigator>
+    );
+  }
+
+  Editar = () => {
+    const Nav = createNativeStackNavigator();
+    return (
+      <Nav.Navigator>
+        <Nav.Screen name='Busqueda' component={SearchAppointment} />
+      </Nav.Navigator>
+    );
+  }
+
   render() {
 
     const Tab = createNativeStackNavigator();
@@ -19,6 +38,8 @@ export default class Navegacion extends Component {
       <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
+          <Tab.Screen name='Crear' component={this.Crear}/>
+          <Tab.Screen name='Editar' component={this.Editar}/>
         </Tab.Navigator>
       </NavigationContainer>
     );

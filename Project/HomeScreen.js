@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native';
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -19,13 +19,52 @@ export default class HomeScreen extends Component {
   }
 
   formulario = () => {
+    // "#063970"
+    const Click1 = () => {
+      console.log("diste click al boton prueba");
+    }
+
+    const Boton = ({text, descripcion, onpress: Function}) => {
+
+      return (
+        <TouchableOpacity style={{
+          width: 300,
+          height: 50,
+          borderRadius: 30,
+        }} onPress={Function}>
+          <View style={{
+            width: 300,
+            height: 50,
+            borderWidth: 2,
+            borderColor: "#063970",
+            backgroundColor: "#063970",
+            borderRadius: 30,
+          }}>
+            <Text style={{
+              color: "white",
+              fontWeight: "bold",
+              fontSize: 16,
+              textAlign: "center",
+              textAlignVertical: "center"
+            }}>{text}</Text>
+            <Text style={{
+              color: "white",
+              fontSize: 16,
+              textAlign: "center",
+              textAlignVertical: "center"
+            }}>{descripcion}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    };  
+
     return (
       <View style={stylesFormulario.fondo}>
         <View style={stylesFormulario.container}>
-
+          <Boton text="Crear Cita" descripcion="Crea cita para entrar con tu vehiculo" onpress={Click1} />
         </View>
-        <View style={stylesFormulario.container}>
-            
+        <View style={[stylesFormulario.container]}>
+          <Boton text="Editar Cita" descripcion="Modifica alguna cita existente" onpress={Click1}/>
         </View>
       </View>
 
@@ -76,6 +115,7 @@ const stylesInstruction = StyleSheet.create({
 const stylesFormulario = StyleSheet.create({
   fondo: {
     flex: 1,
+    height: 200,
     width: 350,
     borderRadius: 30,
     //justifyContent: 'space-around', //define la posicion, entre los elementos adentro (hijos)
@@ -104,12 +144,12 @@ const stylesMain = StyleSheet.create({
     //ejemplo, si esta en column ahora sera en row, y vicerversa.
   },
   containerHigh: {
-    flex: 1, // ocupar todo el espacio que pueda
-    flexDirection: "row", //define como alineara los items (default: column (columna))
+    flex: 2, // ocupar todo el espacio que pueda
+    flexDirection: "column", //define como alineara los items (default: column (columna))
     //los reverse, sera al reves (final es el inicio, etc)
     alignItems: "center", //define si se alinea al inicio, en medio o al final, y delimita
     //--si esta al centro, no podra salirse de ahi, y asi sucesivamente.
-    //justifyContent: "flex-start", // igual a flexDirection, pero en forma contraria
+    justifyContent: "center", // igual a flexDirection, pero en forma contraria
     //--ejemplo, si esta en column ahora sera en row, y vicerversa.
   },
   containerMiddle: {
@@ -122,7 +162,7 @@ const stylesMain = StyleSheet.create({
     //backgroundColor: "white"
   },
   containerLow: {
-    flex: 1, // ocupar todo el espacio que pueda
+    flex: 2, // ocupar todo el espacio que pueda
     flexDirection: "column", //define como alineara los items (default: column (columna))
     //los reverse, sera al reves (final es el inicio, etc)
     alignItems: "center", //define si se alinea al inicio, en medio o al final
@@ -134,9 +174,8 @@ const stylesMain = StyleSheet.create({
     flex: 1,
   },
   logo: {
-    flex: 2,
-    width: 20, //si esta en column, aqui modificas el tamaño
-    height: 70, //si esta en row, aqui modificas el tamaño
+    width: 200, //si esta en column, aqui modificas el tamaño
+    height: 100, //si esta en row, aqui modificas el tamaño
     resizeMode: 'center', //cuanto cubrira del contenedor
   },
   text: {

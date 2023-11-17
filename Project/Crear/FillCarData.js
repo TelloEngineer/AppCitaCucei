@@ -1,6 +1,36 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 
+function Campo ({ nombre, saveState }){
+  return (
+    <View>
+      <Text style={{
+        marginLeft: 22,
+        marginTop: 10,
+        fontWeight: "bold",
+        color: "black",
+        fontSize: 18,
+      }}>{nombre}: </Text>
+      <TextInput style={{
+        borderWidth: 1,
+        width: 200,
+        height: 50,
+        borderRadius: 20,
+        borderColor: "white",
+        marginTop: 5,
+        marginBottom: 8,
+        marginLeft: 20,
+        width: 280,
+        backgroundColor: "white",
+        fontSize: 15,
+        marginLeft: 20,
+        color: "black",
+      }} onChangeText={saveState}
+      ></TextInput>
+    </View>
+  );
+}
+
 export default class FillCarData extends Component {
   constructor(props) {
     super(props);
@@ -34,47 +64,12 @@ export default class FillCarData extends Component {
 
   formulario = () => {
     
-    const Campo = ({ nombre, saveState}) =>{
-        return(
-          <View>
-            <Text style={{
-              marginLeft: 22,
-              marginTop: 10,
-              fontWeight: "bold",
-              color: "black",
-              fontSize: 18,
-            }}>{nombre}: </Text>
-            <TextInput style={{
-              borderWidth: 1,
-              width: 200,
-              height: 50,
-              borderRadius: 20,
-              borderColor: "white",
-              marginTop: 5,
-              marginBottom: 8,
-              marginLeft: 20,
-              width: 280,
-              backgroundColor: "white",
-              fontSize: 15,
-              marginLeft: 20,
-              color: "black",
-            }} onChangeText={saveState}
-            ></TextInput>
-          </View>
-        );
-    }
-
-   const onChange = name => value => {
-      this.setState({ [name]: value });
-    }
-
-
     return (
       <View style={stylesFormulario.fondo}>
-        <Campo nombre={"Placas"} saveState={onChange("placas")} /> 
-        <Campo nombre={"Marca"} saveState={onChange("marca")} />
-        <Campo nombre={"Color"} saveState={onChange("color")} />
-        <Campo nombre={"Tipo"} saveState={onChange("tipo")} />
+        <Campo nombre={"Placas"} saveState={(placas) => this.setState({ placas })}/>
+        <Campo nombre={"Marca"} saveState={(marca) => this.setState({ marca })} />
+        <Campo nombre={"Color"} saveState={(color) => this.setState({ color })} />
+        <Campo nombre={"Tipo"} saveState={(tipo) => this.setState({ tipo })} />
       </View>
 
     );
@@ -96,7 +91,6 @@ export default class FillCarData extends Component {
     );
   }
 }
-
 const stylesAccept = StyleSheet.create({
   fondo: {
     height: 70,

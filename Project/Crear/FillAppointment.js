@@ -26,7 +26,6 @@ export default class FillAppointment extends Component {
   sendCita = () => {
 
     const cita = {
-      id: this.state.id,
       nombre: this.state.nombre,
       hora: this.state.hora,
       fecha: this.state.fecha,
@@ -40,7 +39,6 @@ export default class FillAppointment extends Component {
     };
 
     const citaExample = {
-      id: 3,
       nombre: "jose marron",
       fecha: "14/11/2023",
       hora: "23:15",
@@ -74,9 +72,36 @@ export default class FillAppointment extends Component {
     
   }
 
+  isEmpty = () => {
+    if (this.state.nombre.trim() === "") {
+      return "nombre esta vacio";
+    }
+    if (this.state.fecha.trim() === "") {
+      return "fecha esta vacio";
+    }
+    if (this.state.hora.trim() === "") {
+      return "hora esta vacio";
+    }
+    if (this.state.entrada.trim() === "") {
+      return "entrada esta vacio";
+    }
+    return "";
+  }
+
+  send = () => {
+    check = this.isEmpty();
+    console.log(check);
+    if (check != "") {
+      console.log(check);
+    } else {
+      this.sendCita();
+    }
+  }
+
+
   Accept = () => {
     return (
-      <TouchableOpacity style={stylesAccept.fondo} onPress={this.sendCita}>
+      <TouchableOpacity style={stylesAccept.fondo} onPress={this.send}>
         <Text style={{ "fontSize": 40 }}>Siguiente</Text>
       </TouchableOpacity>
     );

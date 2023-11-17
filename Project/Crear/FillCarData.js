@@ -55,9 +55,35 @@ export default class FillCarData extends Component {
     });
   }
 
+  isEmpty = () => {
+    if (this.state.placas.trim() === "") {
+        return "placas esta vacio";
+    }
+    if (this.state.marca.trim() === "") {
+      return "marca esta vacio";
+    }
+    if (this.state.color.trim() === "") {
+      return "color esta vacio";
+    }
+    if (this.state.tipo.trim() === "") {
+      return "tipo esta vacio";
+    }
+    return "";
+  }
+
+  send = () =>{
+    check = this.isEmpty();
+    console.log(check);
+    if(check != ""){
+        console.log(check);
+    }else{
+        this.next();
+    }
+  }
+
   Accept = () => {
     return (
-      <TouchableOpacity style={stylesAccept.fondo} onPress={this.next}>
+      <TouchableOpacity style={stylesAccept.fondo} onPress={this.send}>
         <Text style={{ "fontSize": 40 }}>Siguiente</Text>
       </TouchableOpacity>
     );

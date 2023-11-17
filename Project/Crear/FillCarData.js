@@ -39,6 +39,7 @@ export default class FillCarData extends Component {
       marca: "",
       color: "",
       tipo: "",
+      state: false,
     };
   }
 
@@ -63,13 +64,16 @@ export default class FillCarData extends Component {
   }
 
   formulario = () => {
-    
+    onChangeText = name => text => {
+      this.setState({ [name]: text });
+    };
+
     return (
       <View style={stylesFormulario.fondo}>
-        <Campo nombre={"Placas"} saveState={(placas) => this.setState({ placas })}/>
-        <Campo nombre={"Marca"} saveState={(marca) => this.setState({ marca })} />
-        <Campo nombre={"Color"} saveState={(color) => this.setState({ color })} />
-        <Campo nombre={"Tipo"} saveState={(tipo) => this.setState({ tipo })} />
+        <Campo nombre={"Placas"} saveState={onChangeText("placas")}/>
+        <Campo nombre={"Marca"} saveState={onChangeText("marca")} />
+        <Campo nombre={"Color"} saveState={onChangeText("color")} />
+        <Campo nombre={"Tipo"} saveState={onChangeText("tipo")} />
       </View>
 
     );

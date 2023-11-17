@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, StyleSheet} from 'react-native';
 
 export default class SearchAppointment extends Component {
   constructor(props) {
@@ -26,7 +26,6 @@ export default class SearchAppointment extends Component {
     //Se debe de poner el ip de la maquina, si corre en localhost
     //En ves de localhost 192.168.100.6, port: 8080
     xhttp.open("GET", "http://192.168.100.6:8080/CitaCucei", true);
-    console.log("hola 2: " + this.state.citas);
     xhttp.send();
     
   }
@@ -43,7 +42,15 @@ export default class SearchAppointment extends Component {
             data={this.state.citas}
             renderItem={({ item }) => (
               <View>
-                <Text style={{color: "black"}}>{item.nombre}</Text>
+                <Text style={styles.campo}>{item.id}</Text>
+                <Text style={styles.campo}>{item.nombre}</Text>
+                <Text style={styles.campo}>{item.fecha}</Text>
+                <Text style={styles.campo}>{item.hora}</Text>
+                <Text style={styles.campo}>{item.vehiculo.placas}</Text>
+                <Text style={styles.campo}>{item.vehiculo.marca}</Text>
+                <Text style={styles.campo}>{item.vehiculo.color}</Text>
+                <Text style={styles.campo}>{item.vehiculo.tipo}</Text>
+                <Text style={styles.campo}>{item.entrada}</Text>
               </View>
             )}  
         />
@@ -51,3 +58,9 @@ export default class SearchAppointment extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+    campo: {
+       color: "black",
+    }
+})

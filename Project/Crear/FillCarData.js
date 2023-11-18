@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, Modal } from 'react-native';
 
-function Campo ({ nombre, saveState }){
+function Campo({ nombre, saveState }) {
   return (
     <View>
       <Text style={{
@@ -39,14 +39,13 @@ export default class FillCarData extends Component {
       marca: "",
       color: "",
       tipo: "",
-      state: false,
+      error: "",
+      stateError: false,
     };
   }
 
   next = () => {
     const navigation = this.props.navigation;
-
-    console.log(this.state);
     navigation.navigate("Datos de la cita", {
       placas: this.state.placas,
       marca: this.state.marca,
@@ -57,27 +56,29 @@ export default class FillCarData extends Component {
 
   isEmpty = () => {
     if (this.state.placas.trim() === "") {
-        return "placas esta vacio";
+      return "El campo placas esta vacio";
     }
     if (this.state.marca.trim() === "") {
-      return "marca esta vacio";
+      return "El campo marca esta vacio";
     }
     if (this.state.color.trim() === "") {
-      return "color esta vacio";
+      return "El campo color esta vacio";
     }
     if (this.state.tipo.trim() === "") {
-      return "tipo esta vacio";
+      return "El campo tipo esta vacio";
     }
     return "";
   }
 
-  send = () =>{
+  send = () => {
     check = this.isEmpty();
-    console.log(check);
-    if(check != ""){
-        console.log(check);
-    }else{
-        this.next();
+    if (check != "") {
+      this.setState({ stateError: true })
+      this.setState({ error: check})
+      console.log(this.state.stateError)
+    } else {
+      this.setState({ stateError: false })
+      this.next();
     }
   }
 
@@ -89,6 +90,62 @@ export default class FillCarData extends Component {
     );
   }
 
+  errorMessage = () => {
+    return(
+      <Modal
+        transparent={true}
+        /*onRequestClose={() => {
+           this.setState({modalVisible:false}) 
+        }}*/
+        animationType="slide"
+        visible={this.state.stateError}>
+        <View style={{
+          borderWidth: 2,
+          marginLeft: 35,
+          marginTop: 300,
+          borderRadius: 20,
+          width: 300,
+          height: 120,
+          backgroundColor: "#D31717",
+
+          alignItems: "center",
+          alignContent: "center"
+        }}>
+          <Text style={{
+            flex: 1,
+            marginTop: 10,
+            fontWeight: "bold",
+            color: "black",
+            fontSize: 20,
+            textAlign: "center"
+          }}>{this.state.error}</Text>
+          <TouchableOpacity style={{
+            flex: 1,
+            borderWidth: 2,
+            borderColor: "#063970",
+            backgroundColor: "#919EC2",
+            width: 250,
+            height: 50,
+            borderRadius: 40,
+            
+            alignItems: "center",
+            alignContent: "center"
+          }} onPress={() => this.setState({ stateError: false })}>
+            <Text style={{flex: 1}}></Text>
+            <Text style={{
+              flex: 3,
+              fontSize: 20,
+              /*marginLeft:100,*/
+              fontWeight: "bold",
+              color: "#0D246A",
+            }}> ACEPTAR </Text>
+          </TouchableOpacity>
+
+        </View>
+      </Modal>
+    );
+  }
+
   formulario = () => {
     onChangeText = name => text => {
       this.setState({ [name]: text });
@@ -96,7 +153,7 @@ export default class FillCarData extends Component {
 
     return (
       <View style={stylesFormulario.fondo}>
-        <Campo nombre={"Placas"} saveState={onChangeText("placas")}/>
+        <Campo nombre={"Placas"} saveState={onChangeText("placas")} />
         <Campo nombre={"Marca"} saveState={onChangeText("marca")} />
         <Campo nombre={"Color"} saveState={onChangeText("color")} />
         <Campo nombre={"Tipo"} saveState={onChangeText("tipo")} />
@@ -111,10 +168,11 @@ export default class FillCarData extends Component {
       <View style={stylesMain.container}>
         <ImageBackground source={image} resizeMode="cover" style={stylesMain.image}>
           <View style={stylesMain.containerHigh}>
+            <this.errorMessage />
             <this.formulario />
           </View>
           <View style={stylesMain.containerLow}>
-            <this.Accept/>
+            <this.Accept />
           </View>
         </ImageBackground>
       </View>

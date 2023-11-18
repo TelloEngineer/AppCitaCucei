@@ -60,15 +60,20 @@ export default class FillAppointment extends Component {
       }
     }
 
-    // send post request
-    fetch(url, options)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({code: res.code})
-        this.setState({message: res.message})
-        console.log(this.state.code + " " + this.state.message)
-      })
-      .catch(err => console.error(err))
+   
+      fetch(url, options)
+        .then(response => {
+          if (response.ok) {
+            throw new Error('Network error');
+          }
+          return response.json();
+        })
+        .then(response => {
+          this.setState({ code: response.code })
+          this.setState({ message: response.message })
+          console.log(this.state.code + " " + this.state.message)
+        })
+        .catch(err => console.log( "hjajsj " + err))
     
   }
 
@@ -101,7 +106,7 @@ export default class FillAppointment extends Component {
 
   Accept = () => {
     return (
-      <TouchableOpacity style={stylesAccept.fondo} onPress={this.send}>
+      <TouchableOpacity style={stylesAccept.fondo} onPress={this.sendCita}>
         <Text style={{ "fontSize": 40 }}>Siguiente</Text>
       </TouchableOpacity>
     );

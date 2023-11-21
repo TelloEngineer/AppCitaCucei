@@ -32,8 +32,9 @@ export default class SearchAppointment extends Component {
   
   render() {
     const getCita = (item) =>{
-       const cita = {
-          id: item.id
+       const id = {
+          cita: item.id.cita,
+          vehiculo: item.id.vehiculo
        }
     }
     return (
@@ -42,10 +43,8 @@ export default class SearchAppointment extends Component {
             data={this.state.citas}
             renderItem={({ item }) => (
               <View>
-                <Text style={styles.campo}>{item.id}</Text>
                 <Text style={styles.campo}>{item.nombre}</Text>
-                <Text style={styles.campo}>{item.fecha}</Text>
-                <Text style={styles.campo}>{item.hora}</Text>
+                <Text style={styles.campo}>{item.cita.fecha}</Text>
                 <Text style={styles.campo}>{item.vehiculo.placas}</Text>
                 <Text style={styles.campo}>{item.vehiculo.marca}</Text>
                 <Text style={styles.campo}>{item.vehiculo.color}</Text>

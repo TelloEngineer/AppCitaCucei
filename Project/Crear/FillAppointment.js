@@ -27,28 +27,30 @@ export default class FillAppointment extends Component {
 
     const cita = {
       nombre: this.state.nombre,
-      hora: this.state.hora,
-      fecha: this.state.fecha,
+      entrada: this.state.entrada,
+      cita: {
+        fecha: this.state.fecha
+      },
       vehiculo: {
         placas: this.props.route.params.placas,
         marca: this.props.route.params.marca,
         color: this.props.route.params.color,
         tipo: this.props.route.params.tipo,
-      },
-      entrada: this.state.entrada,
+      }
     };
 
     const citaExample = {
-      nombre: "jose marron",
-      fecha: "14/11/2023",
-      hora: "23:15",
-      vehiculo: {
-        placas: "J13424421",
-        marca: "Ford",
-        color: "rojo",
-        tipo: "Automovil"
+      nombre: "juan perez",
+      entrada: 2,
+      cita: {
+        fecha: "21/11/2023 20:13"
       },
-      "entrada": 3
+      vehiculo: {
+        placas: "J134241",
+        marca: "Ford",
+        color: "verde",
+        tipo: "Motocicleta"
+      }
     }
 
     const url = "http://192.168.100.6:8080/CitaCucei"

@@ -40,8 +40,9 @@ export default class SearchAppointment extends Component {
     return (
       <View>
         <FlatList
-            data={this.state.citas}
-            renderItem={({ item }) => (
+            data={this.state.citas} // set item
+            keyExtractor={(item, index) => String(index)}  //para llaves compuestas
+            renderItem={({ item }) => ( //render item
               <View>
                 <Text style={styles.campo}>{item.nombre}</Text>
                 <Text style={styles.campo}>{item.cita.fecha}</Text>

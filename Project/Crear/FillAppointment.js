@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Modal } from 'react-native';
 {/*
   placas: this.props.route.params.placas,
     marca: this.props.route.params.marca,
@@ -17,10 +17,123 @@ export default class FillAppointment extends Component {
       hora: "",
       fecha: "",
 
-      
       code: 0,
-      message: "",
+
+      error: "",
+      stateError: false,
+      stateAcept: false,
     };
+  }
+
+  AcceptMessage = () => {
+    return (
+      <Modal
+        transparent={true}
+        /*onRequestClose={() => {
+           this.setState({modalVisible:false}) 
+        }}*/
+        animationType="slide"
+        visible={this.state.stateError}>
+        <View style={{
+          borderWidth: 2,
+          marginLeft: 35,
+          marginTop: 300,
+          borderRadius: 20,
+          width: 300,
+          height: 120,
+          backgroundColor: "#1960A2",
+
+          alignItems: "center",
+          alignContent: "center"
+        }}>
+          <Text style={{
+            flex: 1,
+            marginTop: 10,
+            fontWeight: "bold",
+            color: "black",
+            fontSize: 20,
+            textAlign: "center"
+          }}>{this.state.error}</Text>
+          <TouchableOpacity style={{
+            flex: 1,
+            borderWidth: 2,
+            borderColor: "#063970",
+            backgroundColor: "#919EC2",
+            width: 250,
+            height: 50,
+            borderRadius: 40,
+
+            alignItems: "center",
+            alignContent: "center"
+          }} onPress={() => this.setState({ stateAcept: false })}>
+            <Text style={{ flex: 1 }}></Text>
+            <Text style={{
+              flex: 3,
+              fontSize: 20,
+              /*marginLeft:100,*/
+              fontWeight: "bold",
+              color: "#0D246A",
+            }}> ACEPTAR </Text>
+          </TouchableOpacity>
+
+        </View>
+      </Modal>
+    );
+  }
+  errorMessage = () => {
+    return (
+      <Modal
+        transparent={true}
+        /*onRequestClose={() => {
+           this.setState({modalVisible:false}) 
+        }}*/
+        animationType="slide"
+        visible={this.state.stateError}>
+        <View style={{
+          borderWidth: 2,
+          marginLeft: 35,
+          marginTop: 300,
+          borderRadius: 20,
+          width: 300,
+          height: 120,
+          backgroundColor: "#D31717",
+
+          alignItems: "center",
+          alignContent: "center"
+        }}>
+          <Text style={{
+            flex: 1,
+            marginTop: 10,
+            fontWeight: "bold",
+            color: "black",
+            fontSize: 20,
+            textAlign: "center"
+          }}>{this.state.error}</Text>
+          <TouchableOpacity style={{
+            flex: 1,
+            borderWidth: 2,
+            borderColor: "#063970",
+            backgroundColor: "#919EC2",
+            width: 250,
+            height: 50,
+            borderRadius: 40,
+
+            alignItems: "center",
+            alignContent: "center"
+          }} onPress={() => this.setState({ stateError: false })}>
+            <Text style={{ flex: 1 }}></Text>
+            <Text style={{
+              flex: 3,
+              fontSize: 20,
+              /*marginLeft:100,*/
+              fontWeight: "bold",
+              color: "#0D246A",
+            }}> ACEPTAR </Text>
+          </TouchableOpacity>
+
+        </View>
+      </Modal>
+    );
   }
 
   sendCita = () => {
@@ -65,17 +178,23 @@ export default class FillAppointment extends Component {
    
       fetch(url, options)
         .then(response => {
-          if (response.ok) {
+          if (!response.ok) {
+            this.setState({ stateAccept: true })
+            this.setState({ error: response.message })
             throw new Error('Network error');
           }
           return response.json();
         })
         .then(response => {
           this.setState({ code: response.code })
-          this.setState({ message: response.message })
-          console.log(this.state.code + " " + this.state.message)
+          this.setState({ stateAccept: true })
+          this.setState({ error: response.message })
         })
-        .catch(err => console.log( "hjajsj " + err))
+        .catch(err => {
+            this.setState({ stateError: true })
+            this.setState({ error: err })
+          }
+        )
     
   }
 
@@ -99,8 +218,11 @@ export default class FillAppointment extends Component {
     check = this.isEmpty();
     console.log(check);
     if (check != "") {
+      this.setState({ stateError: true })
+      this.setState({ error: check })
       console.log(check);
     } else {
+      this.setState({ stateError: false })
       this.sendCita();
     }
   }
@@ -119,6 +241,8 @@ export default class FillAppointment extends Component {
       <View>
         <Text style={{color: "red"}}> hola: {this.state.vehiculo} </Text>
         <this.Accept></this.Accept>
+        <this.errorMessage />
+        <this.AcceptMessage/>
       </View>
       
     );

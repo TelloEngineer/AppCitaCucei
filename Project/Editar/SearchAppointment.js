@@ -21,6 +21,7 @@ export default class SearchAppointment extends Component {
         var Temp = JSON.parse(xhttp.responseText)
         _this.setState({ citas: Temp })
       }
+      console.log(this.status);
     };
     //http://192.168.100.6:8080/CitaCucei
     //Se debe de poner el ip de la maquina, si corre en localhost

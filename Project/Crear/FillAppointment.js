@@ -29,11 +29,8 @@ export default class FillAppointment extends Component {
     return (
       <Modal
         transparent={true}
-        /*onRequestClose={() => {
-           this.setState({modalVisible:false}) 
-        }}*/
         animationType="slide"
-        visible={this.state.stateError}>
+        visible={this.state.stateAcept}>
         <View style={{
           borderWidth: 2,
           marginLeft: 35,
@@ -65,7 +62,12 @@ export default class FillAppointment extends Component {
 
             alignItems: "center",
             alignContent: "center"
-          }} onPress={() => this.setState({ stateAcept: false })}>
+          }} onPress={() => {
+                this.setState({ stateAcept: false })
+                const navigation = this.props.navigation;
+                navigation.navigate("Home");
+              }
+            }>
             <Text style={{ flex: 1 }}></Text>
             <Text style={{
               flex: 3,
@@ -136,6 +138,16 @@ export default class FillAppointment extends Component {
     );
   }
 
+  returnHome = () =>{
+    if(this.state.code == 0){
+      this.setState({ stateAcept: true })
+      
+    }else{
+      this.setState({ stateError: true });
+    }
+      
+  }
+
   sendCita = () => {
 
     const cita = {
@@ -179,7 +191,7 @@ export default class FillAppointment extends Component {
       fetch(url, options)
         .then(response => {
           if (!response.ok) {
-            this.setState({ stateAccept: true })
+            this.setState({ stateError: true })
             this.setState({ error: response.message })
             throw new Error('Network error');
           }
@@ -187,8 +199,8 @@ export default class FillAppointment extends Component {
         })
         .then(response => {
           this.setState({ code: response.code })
-          this.setState({ stateAccept: true })
           this.setState({ error: response.message })
+          this.returnHome();
         })
         .catch(err => {
             this.setState({ stateError: true })

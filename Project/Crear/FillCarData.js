@@ -64,6 +64,7 @@ function Select ({nombre,saveState, data}){
         width: "100%",
         zIndex: 999,
       }}
+      placeholder='ejem. MotoCicleta'
       setSelected={saveState}
       data={data}
       save="value"
@@ -204,7 +205,7 @@ export default class FillCarData extends Component {
         <Campo nombre={"Placas"} saveState={onChangeText("placas")} />
         <Campo nombre={"Marca"} saveState={onChangeText("marca")} />
         <Campo nombre={"Color"} saveState={onChangeText("color")} />
-        <Select nombre={"Tipo"} saveState={onChangeText("tipo")} data={data}/>
+        <Select nombre={"Tipo de Vehiculo"} saveState={onChangeText("tipo")} data={data}/>
       </View>
 
     );

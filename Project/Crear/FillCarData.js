@@ -31,11 +31,7 @@ function Campo({ nombre, saveState }) {
   );
 }
 
-function Select ({nombre,saveState}){
-  const data = [
-    { key: '1', value: 'Automovil'},
-    { key: '2', value: 'MotoCicleta' },
-  ]
+function Select ({nombre,saveState, data}){
 
   return (
     <View>
@@ -194,12 +190,17 @@ export default class FillCarData extends Component {
       this.setState({ [name]: text });
     };
 
+    const data = [
+      { key: '1', value: 'Automovil' },
+      { key: '2', value: 'MotoCicleta' },
+    ]
+
     return (
       <View style={stylesFormulario.fondo}>
         <Campo nombre={"Placas"} saveState={onChangeText("placas")} />
         <Campo nombre={"Marca"} saveState={onChangeText("marca")} />
         <Campo nombre={"Color"} saveState={onChangeText("color")} />
-        <Select nombre={"Tipo"} saveState={onChangeText("tipo")} />
+        <Select nombre={"Tipo"} saveState={onChangeText("tipo")} data={data}/>
       </View>
 
     );

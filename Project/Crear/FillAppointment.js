@@ -1,22 +1,34 @@
 import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Modal, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Modal, ImageBackground, Button } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list'
 import DatePicker from 'react-native-date-picker'
+import {format} from "date-fns";
 {/*
   placas: this.props.route.params.placas,
     marca: this.props.route.params.marca,
       color: this.props.route.params.color,
         tipo: this.props.route.params.tipo,
 */}
-function Fecha (){
-  const [date, setDate] = useState(new Date())
+function Fecha({ date, setDate, open, setOpen}) {
+
   return (
-    <View>
-      <DatePicker date={date} onDateChange={setDate} />
+    <View style={{marginTop: 20, marginLeft:20, marginRight:50}}>
+      <Button  title="Fecha" onPress={() => setOpen(true)} />
+      <DatePicker
+        modal
+        open={open}
+        date={date}
+        onConfirm={(date) => {
+          setOpen(false)
+          setDate(date)
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+      />
     </View>
   );
 }
-
 
 function Campo({ nombre, saveState }) {
   return (
@@ -47,7 +59,7 @@ function Campo({ nombre, saveState }) {
   );
 }
 
-function Select({ nombre, saveState, data }) {
+function Select({ nombre, saveState, data, etiqueta }) {
 
   return (
     <View>
@@ -79,7 +91,7 @@ function Select({ nombre, saveState, data }) {
           width: "100%",
           zIndex: 999,
         }}
-        placeholder='ejem. MotoCicleta'
+        placeholder={etiqueta}
         setSelected={saveState}
         data={data}
         save="value"
@@ -93,11 +105,9 @@ export default class FillAppointment extends Component {
     super(props);
     
     this.state = {
-      id: 0,
       nombre: "",
       entrada: 0,
-      hora: "",
-      fecha: "",
+      date: new Date(),
 
       code: 0,
 
@@ -105,7 +115,7 @@ export default class FillAppointment extends Component {
       stateError: false,
       stateAcept: false,
 
-      date: new Date(),
+      open: false,
     };
   }
 
@@ -238,7 +248,7 @@ export default class FillAppointment extends Component {
       nombre: this.state.nombre,
       entrada: this.state.entrada,
       cita: {
-        fecha: this.state.fecha
+        fecha: format(this.state.date, "dd/MM/yyyy HH:mm")
       },
       vehiculo: {
         placas: this.props.route.params.placas,
@@ -265,7 +275,7 @@ export default class FillAppointment extends Component {
     const url = "http://192.168.100.6:8080/CitaCucei"
     const options = {
       method: 'POST',
-      body: JSON.stringify(citaExample),
+      body: JSON.stringify(cita),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -295,16 +305,13 @@ export default class FillAppointment extends Component {
   }
 
   isEmpty = () => {
+    if (this.state.date === new Date()) {
+      return "fecha esta vacio";
+    }
     if (this.state.nombre.trim() === "") {
       return "nombre esta vacio";
     }
-    if (this.state.fecha.trim() === "") {
-      return "fecha esta vacio";
-    }
-    if (this.state.hora.trim() === "") {
-      return "hora esta vacio";
-    }
-    if (this.state.entrada.trim() === "") {
+    if (this.state.entrada === 0) {
       return "entrada esta vacio";
     }
     return "";
@@ -329,16 +336,16 @@ export default class FillAppointment extends Component {
     };
 
     const data = [
-      { key: '1', value: 'Automovil' },
-      { key: '2', value: 'MotoCicleta' },
+      { key: '1', value: '1' },
+      { key: '2', value: '2' },
+      { key: '3', value: '3' },
     ]
-
+    console.log(this.state.date + "  " + new Date());
     return (
       <View style={stylesFormulario.fondo}>
-        <Fecha></Fecha>
-        <Campo nombre={"Marca"} saveState={onChangeText("marca")} />
-        <Campo nombre={"Color"} saveState={onChangeText("color")} />
-        <Select nombre={"Tipo de Vehiculo"} saveState={onChangeText("tipo")} data={data} />
+        <Fecha date={this.state.date} setDate={onChangeText("date")} open={this.state.open} setOpen={onChangeText("open")}/>
+        <Campo nombre={"Nombre"} saveState={onChangeText("nombre")} />
+        <Select nombre={"Entrada"} saveState={onChangeText("entrada")} data={data} etiqueta={"Numero de la entrada"}/>
       </View>
 
     );
@@ -346,7 +353,7 @@ export default class FillAppointment extends Component {
 
   Accept = () => {
     return (
-      <TouchableOpacity style={stylesAccept.fondo} onPress={this.sendCita}>
+      <TouchableOpacity style={stylesAccept.fondo} onPress={this.send}>
         <Text style={{ "fontSize": 40 }}>Siguiente</Text>
       </TouchableOpacity>
     );
@@ -389,7 +396,7 @@ const stylesAccept = StyleSheet.create({
 
 const stylesFormulario = StyleSheet.create({
   fondo: {
-    height: 400,
+    height: 300,
     width: 350,
     borderRadius: 30,
     //justifyContent: 'space-around', //define la posicion, entre los elementos adentro (hijos)
@@ -397,6 +404,7 @@ const stylesFormulario = StyleSheet.create({
     backgroundColor: "#E47B1F",
 
     flexDirection: "column",
+    alignContent: 'center'
   },
   container: {
     flex: 1, // ocupar todo el espacio que pueda

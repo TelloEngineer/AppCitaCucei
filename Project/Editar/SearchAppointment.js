@@ -26,7 +26,7 @@ export default class SearchAppointment extends Component {
     //http://192.168.100.6:8080/CitaCucei
     //Se debe de poner el ip de la maquina, si corre en localhost
     //En ves de localhost 192.168.100.6, port: 8080
-    xhttp.open("GET", "http://192.168.100.6:8080/CitaCucei", true);
+    xhttp.open("GET", "http://10.214.64.255:8080/CitaCucei", true);
     xhttp.send();
     
   }

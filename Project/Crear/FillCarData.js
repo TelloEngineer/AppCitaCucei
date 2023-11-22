@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, Modal } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list'
 
-function Campo({ nombre, saveState }) {
+function Campo({ nombre, saveState}) {
   return (
     <View>
       <Text style={{
@@ -77,7 +77,7 @@ export default class FillCarData extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      placas: "",
+      identificador: "",
       marca: "",
       color: "",
       tipo: "",
@@ -89,7 +89,7 @@ export default class FillCarData extends Component {
   next = () => {
     const navigation = this.props.navigation;
     navigation.navigate("Datos de la cita", {
-      placas: this.state.placas,
+      identificador: this.state.identificador,
       marca: this.state.marca,
       color: this.state.color,
       tipo: this.state.tipo
@@ -97,8 +97,8 @@ export default class FillCarData extends Component {
   }
 
   isEmpty = () => {
-    if (this.state.placas.trim() === "") {
-      return "El campo placas esta vacio";
+    if (this.state.identificador.trim() === "") {
+      return "El campo identificador esta vacio";
     }
     if (this.state.marca.trim() === "") {
       return "El campo marca esta vacio";
@@ -197,15 +197,15 @@ export default class FillCarData extends Component {
 
     const data = [
       { key: '1', value: 'Automovil' },
-      { key: '2', value: 'MotoCicleta' },
+      { key: '2', value: 'MotoCicleta' }
     ]
 
     return (
       <View style={stylesFormulario.fondo}>
-        <Campo nombre={"Placas"} saveState={onChangeText("placas")} />
+        <Campo nombre={"Placa"} saveState={onChangeText("identificador")} />
         <Campo nombre={"Marca"} saveState={onChangeText("marca")} />
         <Campo nombre={"Color"} saveState={onChangeText("color")} />
-        <Select nombre={"Tipo de Vehiculo"} saveState={onChangeText("tipo")} data={data}/>
+        <Select nombre={"Tipo de Citado"} saveState={onChangeText("tipo")} data={data}/>
       </View>
 
     );

@@ -30,35 +30,6 @@ function Fecha({ date, setDate, open, setOpen}) {
   );
 }
 
-function Campo({ nombre, saveState }) {
-  return (
-    <View>
-      <Text style={{
-        marginLeft: 22,
-        marginTop: 10,
-        fontWeight: "bold",
-        color: "black",
-        fontSize: 18,
-      }}>{nombre}: </Text>
-      <TextInput style={{
-        borderWidth: 1,
-        width: 200,
-        height: 50,
-        borderRadius: 20,
-        borderColor: "white",
-        marginTop: 5,
-        marginBottom: 8,
-        width: 280,
-        backgroundColor: "white",
-        fontSize: 15,
-        marginLeft: 20,
-        color: "black",
-      }} onChangeText={saveState}
-      ></TextInput>
-    </View>
-  );
-}
-
 function Select({ nombre, saveState, data, etiqueta }) {
 
   return (
@@ -105,7 +76,6 @@ export default class FillAppointment extends Component {
     super(props);
     
     this.state = {
-      nombre: "",
       entrada: 0,
       date: new Date(),
 
@@ -245,13 +215,12 @@ export default class FillAppointment extends Component {
   sendCita = () => {
 
     const cita = {
-      nombre: this.state.nombre,
       entrada: this.state.entrada,
       cita: {
         fecha: format(this.state.date, "dd/MM/yyyy HH:mm")
       },
-      vehiculo: {
-        placas: this.props.route.params.placas,
+      citado: {
+        identificador: this.props.route.params.identificador,
         marca: this.props.route.params.marca,
         color: this.props.route.params.color,
         tipo: this.props.route.params.tipo,
@@ -259,20 +228,19 @@ export default class FillAppointment extends Component {
     };
 
     const citaExample = {
-      nombre: "juan perez",
       entrada: 2,
       cita: {
-        fecha: "21/11/2023 20:13"
+        fecha: "22/11/2023 12:13"
       },
-      vehiculo: {
-        placas: "J134241",
+      citado: {
+        identificador: "J134241",
         marca: "Ford",
         color: "verde",
         tipo: "Motocicleta"
       }
     }
 
-    const url = "http://192.168.100.6:8080/CitaCucei"
+    const url = "http://10.214.64.255:8080/CitaCucei"
     const options = {
       method: 'POST',
       body: JSON.stringify(cita),
@@ -308,9 +276,6 @@ export default class FillAppointment extends Component {
     if (this.state.date === new Date()) {
       return "fecha esta vacio";
     }
-    if (this.state.nombre.trim() === "") {
-      return "nombre esta vacio";
-    }
     if (this.state.entrada === 0) {
       return "entrada esta vacio";
     }
@@ -344,7 +309,6 @@ export default class FillAppointment extends Component {
     return (
       <View style={stylesFormulario.fondo}>
         <Fecha date={this.state.date} setDate={onChangeText("date")} open={this.state.open} setOpen={onChangeText("open")}/>
-        <Campo nombre={"Nombre"} saveState={onChangeText("nombre")} />
         <Select nombre={"Entrada"} saveState={onChangeText("entrada")} data={data} etiqueta={"Numero de la entrada"}/>
       </View>
 
@@ -396,7 +360,7 @@ const stylesAccept = StyleSheet.create({
 
 const stylesFormulario = StyleSheet.create({
   fondo: {
-    height: 300,
+    height: 200,
     width: 350,
     borderRadius: 30,
     //justifyContent: 'space-around', //define la posicion, entre los elementos adentro (hijos)

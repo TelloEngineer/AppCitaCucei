@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, Modal } from 'react-native';
+import { SelectList } from 'react-native-dropdown-select-list'
 
 function Campo({ nombre, saveState }) {
   return (
@@ -19,7 +20,6 @@ function Campo({ nombre, saveState }) {
         borderColor: "white",
         marginTop: 5,
         marginBottom: 8,
-        marginLeft: 20,
         width: 280,
         backgroundColor: "white",
         fontSize: 15,
@@ -29,6 +29,47 @@ function Campo({ nombre, saveState }) {
       ></TextInput>
     </View>
   );
+}
+
+function Select ({nombre,saveState}){
+  const data = [
+    { key: '1', value: 'Automovil'},
+    { key: '2', value: 'MotoCicleta' },
+  ]
+
+  return (
+    <View>
+      <Text style={{
+        marginLeft: 22,
+        marginTop: 10,
+        fontWeight: "bold",
+        color: "black",
+        fontSize: 18,
+      }}>{nombre}: </Text>
+    <SelectList 
+      boxStyles={{
+        backgroundColor: "white",
+        marginTop: 5,
+        width: 280,
+        marginLeft: 20,
+        borderRadius: 20,
+      }}
+      dropdownTextStyles={{
+        color: "black"
+      }}
+      dropdownStyles={{
+        backgroundColor: "white",
+        position: "absolute",
+        top: 40,
+        width: "100%",
+        zIndex: 999,
+      }}
+      setSelected={saveState}
+      data={data}
+      save="value"
+    />
+    </View>
+  )
 }
 
 export default class FillCarData extends Component {
@@ -146,6 +187,8 @@ export default class FillCarData extends Component {
     );
   }
 
+  
+
   formulario = () => {
     onChangeText = name => text => {
       this.setState({ [name]: text });
@@ -156,7 +199,7 @@ export default class FillCarData extends Component {
         <Campo nombre={"Placas"} saveState={onChangeText("placas")} />
         <Campo nombre={"Marca"} saveState={onChangeText("marca")} />
         <Campo nombre={"Color"} saveState={onChangeText("color")} />
-        <Campo nombre={"Tipo"} saveState={onChangeText("tipo")} />
+        <Select nombre={"Tipo"} saveState={onChangeText("tipo")} />
       </View>
 
     );

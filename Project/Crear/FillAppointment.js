@@ -251,7 +251,7 @@ export default class FillAppointment extends Component {
   render() {
     return (
       <View>
-        <Text style={{color: "red"}}> hola: {this.state.vehiculo} </Text>
+        <Text style={{ color: "red" }}> hola: {this.props.route.params.tipo} </Text>
         <this.Accept></this.Accept>
         <this.errorMessage />
         <this.AcceptMessage/>

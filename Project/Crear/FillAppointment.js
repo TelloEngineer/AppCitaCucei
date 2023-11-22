@@ -1,11 +1,93 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Modal } from 'react-native';
+import React, { Component, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Modal, ImageBackground } from 'react-native';
+import { SelectList } from 'react-native-dropdown-select-list'
+import DatePicker from 'react-native-date-picker'
 {/*
   placas: this.props.route.params.placas,
     marca: this.props.route.params.marca,
       color: this.props.route.params.color,
         tipo: this.props.route.params.tipo,
 */}
+function Fecha (){
+  const [date, setDate] = useState(new Date())
+  return (
+    <View>
+      <DatePicker date={date} onDateChange={setDate} />
+    </View>
+  );
+}
+
+
+function Campo({ nombre, saveState }) {
+  return (
+    <View>
+      <Text style={{
+        marginLeft: 22,
+        marginTop: 10,
+        fontWeight: "bold",
+        color: "black",
+        fontSize: 18,
+      }}>{nombre}: </Text>
+      <TextInput style={{
+        borderWidth: 1,
+        width: 200,
+        height: 50,
+        borderRadius: 20,
+        borderColor: "white",
+        marginTop: 5,
+        marginBottom: 8,
+        width: 280,
+        backgroundColor: "white",
+        fontSize: 15,
+        marginLeft: 20,
+        color: "black",
+      }} onChangeText={saveState}
+      ></TextInput>
+    </View>
+  );
+}
+
+function Select({ nombre, saveState, data }) {
+
+  return (
+    <View>
+      <Text style={{
+        marginLeft: 22,
+        marginTop: 10,
+        fontWeight: "bold",
+        color: "black",
+        fontSize: 18,
+      }}>{nombre}: </Text>
+      <SelectList
+        boxStyles={{
+          backgroundColor: "white",
+          marginTop: 5,
+          width: 280,
+          marginLeft: 20,
+          borderRadius: 20,
+        }}
+        inputStyles={{
+          color: "black"
+        }}
+        dropdownTextStyles={{
+          color: "black"
+        }}
+        dropdownStyles={{
+          backgroundColor: "white",
+          position: "absolute",
+          top: 40,
+          width: "100%",
+          zIndex: 999,
+        }}
+        placeholder='ejem. MotoCicleta'
+        setSelected={saveState}
+        data={data}
+        save="value"
+      />
+    </View>
+  )
+}
+
 export default class FillAppointment extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +104,8 @@ export default class FillAppointment extends Component {
       error: "",
       stateError: false,
       stateAcept: false,
+
+      date: new Date(),
     };
   }
 
@@ -239,6 +323,26 @@ export default class FillAppointment extends Component {
     }
   }
 
+  formulario = () => {
+    onChangeText = name => text => {
+      this.setState({ [name]: text });
+    };
+
+    const data = [
+      { key: '1', value: 'Automovil' },
+      { key: '2', value: 'MotoCicleta' },
+    ]
+
+    return (
+      <View style={stylesFormulario.fondo}>
+        <Fecha></Fecha>
+        <Campo nombre={"Marca"} saveState={onChangeText("marca")} />
+        <Campo nombre={"Color"} saveState={onChangeText("color")} />
+        <Select nombre={"Tipo de Vehiculo"} saveState={onChangeText("tipo")} data={data} />
+      </View>
+
+    );
+  }
 
   Accept = () => {
     return (
@@ -249,14 +353,20 @@ export default class FillAppointment extends Component {
   }
 
   render() {
+    const image = require("../../Imagenes/Entrada.jpg");
     return (
-      <View>
-        <Text style={{ color: "red" }}> hola: {this.props.route.params.tipo} </Text>
-        <this.Accept></this.Accept>
-        <this.errorMessage />
-        <this.AcceptMessage/>
+      <View style={stylesMain.container}>
+        <ImageBackground source={image} resizeMode="cover" style={stylesMain.image}>
+          <View style={stylesMain.containerHigh}>
+            <this.errorMessage />
+            <this.AcceptMessage />
+            <this.formulario />
+          </View>
+          <View style={stylesMain.containerLow}>
+            <this.Accept />
+          </View>
+        </ImageBackground>
       </View>
-      
     );
   }
 }
@@ -273,5 +383,66 @@ const stylesAccept = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+  },
+});
+
+
+const stylesFormulario = StyleSheet.create({
+  fondo: {
+    height: 400,
+    width: 350,
+    borderRadius: 30,
+    //justifyContent: 'space-around', //define la posicion, entre los elementos adentro (hijos)
+    resizeMode: 'center',
+    backgroundColor: "#E47B1F",
+
+    flexDirection: "column",
+  },
+  container: {
+    flex: 1, // ocupar todo el espacio que pueda
+    flexDirection: "row", //define como alineara los items (default: column (columna))
+    //los reverse, sera al reves (final es el inicio, etc)
+    alignItems: "center",
+    justifyContent: "center",
+  }
+});
+
+const stylesMain = StyleSheet.create({
+  container: {
+    flex: 1, // ocupar todo el espacio que pueda
+    flexDirection: "column", //define como alineara los items (default: column (columna))
+    //los reverse, sera al reves (final es el inicio, etc)
+    //alignItems: "flex-start", //define si se alinea al inicio, en medio o al final
+    //justifyContent: "center", // alinea los elementos, contrariamente a flexDirection
+    //ejemplo, si esta en column ahora sera en row, y vicerversa.
+  },
+  containerHigh: {
+    flex: 4, // ocupar todo el espacio que pueda
+    flexDirection: "column", //define como alineara los items (default: column (columna))
+    //los reverse, sera al reves (final es el inicio, etc)
+    alignItems: "center", //define si se alinea al inicio, en medio o al final, y delimita
+    //--si esta al centro, no podra salirse de ahi, y asi sucesivamente.
+    justifyContent: "center", // igual a flexDirection, pero en forma contraria
+    //--ejemplo, si esta en column ahora sera en row, y vicerversa.
+  },
+  containerLow: {
+    flex: 1, // ocupar todo el espacio que pueda
+    flexDirection: "column", //define como alineara los items (default: column (columna))
+    //los reverse, sera al reves (final es el inicio, etc)
+    alignItems: "center", //define si se alinea al inicio, en medio o al final
+    justifyContent: "flex-start", // alinea los elementos, contrariamente a flexDirection
+    //ejemplo, si esta en column ahora sera en row, y vicerversa.
+    //backgroundColor: "white"
+  },
+  image: {
+    flex: 1,
+  },
+  logo: {
+    width: 200, //si esta en column, aqui modificas el tamaño
+    height: 100, //si esta en row, aqui modificas el tamaño
+    resizeMode: 'center', //cuanto cubrira del contenedor
+  },
+  text: {
+    backgroundColor: '#000000c0',
   },
 });

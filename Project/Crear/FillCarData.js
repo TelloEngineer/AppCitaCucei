@@ -49,6 +49,10 @@ function Select ({nombre,saveState, data}){
         width: 280,
         marginLeft: 20,
         borderRadius: 20,
+        
+      }}
+      inputStyles={{
+        color: "black"
       }}
       dropdownTextStyles={{
         color: "black"

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, Modal } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list'
 
-function Campo({ nombre, saveState}) {
+function Campo({ nombre, saveState, etiqueta, dato}) {
   return (
     <View>
       <Text style={{
@@ -25,13 +25,17 @@ function Campo({ nombre, saveState}) {
         fontSize: 15,
         marginLeft: 20,
         color: "black",
-      }} onChangeText={saveState}
+      }} 
+        value={dato} 
+        onChangeText={saveState}
+        placeholder={etiqueta}
+        placeholderTextColor="grey"
       ></TextInput>
     </View>
   );
 }
 
-function Select ({nombre,saveState, data}){
+function Select ({nombre,saveState, data, etiqueta, defaultV}){
 
   return (
     <View>
@@ -59,14 +63,17 @@ function Select ({nombre,saveState, data}){
       }}
       dropdownStyles={{
         backgroundColor: "white",
-        position: "absolute",
+        position: 'absolute',
         top: 40,
-        width: "100%",
+        left:25,
+        width: "78%",
         zIndex: 999,
       }}
-      placeholder='ejem. MotoCicleta'
+      placeholder={etiqueta}
       setSelected={saveState}
       data={data}
+      search={false}
+      defaultOption={defaultV}
       save="value"
     />
     </View>
@@ -192,22 +199,33 @@ export default class FillCarData extends Component {
     };
 
     const data = [
-      { key: '1', value: 'Automovil' },
-      { key: '2', value: 'MotoCicleta' }
+      { key: '1', value: 'Vehiculo' },
+      { key: '2', value: 'Persona' }
     ]
-
+    defaultValue = value => e => e.value === value
+    console.log(data.find(defaultValue("Vehiculo")))
     return (
       <View style={stylesFormulario.fondo}>
-        <Campo nombre={"Placa"} saveState={onChangeText("identificador")} />
-        <Campo nombre={"Color"} saveState={onChangeText("color")} />
-        <Select nombre={"Tipo de Citado"} saveState={onChangeText("tipo")} data={data}/>
+        <Campo nombre={"Nombre o Placa"} dato={this.state.identificador} saveState={onChangeText("identificador")} etiqueta={"¿entrada vehicular o de personas?"}/>
+        <Campo nombre={"Color"} dato={this.state.color} saveState={onChangeText("color")} etiqueta={"De la camiseta o el vehiculo"}/>
+        <Select nombre={"Tipo de Citado"} defaultV={data.find(defaultValue(this.state.tipo))} saveState={onChangeText("tipo")} data={data} etiqueta={"¿sera por entrada vehicular?"}/>
       </View>
 
     );
   }
 
+  initiliazer = () => {
+    console.log("prueba: " + this.props.route.params === undefined);
+    console.log("problema: " + this.props.route.params)
+    //this.setState({ ["identificador"]: this.props.route.params.identificador });
+    //this.setState({ ["color"]: this.props.route.params.color });
+    //this.setState({ ["tipo"]: this.props.route.params.tipo });
+  }
+
   render() {
     const image = require("../../Imagenes/Carro.jpg");
+    
+    this.initiliazer();
     return (
       <View style={stylesMain.container}>
         <ImageBackground source={image} resizeMode="cover" style={stylesMain.image}>
@@ -240,7 +258,7 @@ const stylesAccept = StyleSheet.create({
 
 const stylesFormulario = StyleSheet.create({
   fondo: {
-    height: 400,
+    height: 350,
     width: 350,
     borderRadius: 30,
     //justifyContent: 'space-around', //define la posicion, entre los elementos adentro (hijos)

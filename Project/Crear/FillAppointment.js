@@ -25,12 +25,13 @@ function Fecha({ date, setDate, open, setOpen}) {
         onCancel={() => {
           setOpen(false)
         }}
+        
       />
     </View>
   );
 }
 
-function Select({ nombre, saveState, data, etiqueta }) {
+function Select({ nombre, saveState, data, etiqueta, defaultV }) {
 
   return (
     <View>
@@ -65,6 +66,8 @@ function Select({ nombre, saveState, data, etiqueta }) {
         placeholder={etiqueta}
         setSelected={saveState}
         data={data}
+        search={false}
+        defaultOption={defaultV}
         save="value"
       />
     </View>
@@ -304,10 +307,11 @@ export default class FillAppointment extends Component {
       { key: '3', value: '3' },
     ]
     console.log(this.state.date + "  " + new Date());
+    defaultValue = value => e => e.value === value
     return (
       <View style={stylesFormulario.fondo}>
         <Fecha date={this.state.date} setDate={onChangeText("date")} open={this.state.open} setOpen={onChangeText("open")}/>
-        <Select nombre={"Entrada"} saveState={onChangeText("entrada")} data={data} etiqueta={"Numero de la entrada"}/>
+        <Select nombre={"Entrada"} defaultV={data.find(defaultValue(this.state.tipo))} saveState={onChangeText("entrada")} data={data} etiqueta={"Numero de la entrada"}/>
       </View>
 
     );

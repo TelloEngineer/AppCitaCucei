@@ -221,7 +221,6 @@ export default class FillAppointment extends Component {
       },
       citado: {
         identificador: this.props.route.params.identificador,
-        marca: this.props.route.params.marca,
         color: this.props.route.params.color,
         tipo: this.props.route.params.tipo,
       }
@@ -234,13 +233,12 @@ export default class FillAppointment extends Component {
       },
       citado: {
         identificador: "J134241",
-        marca: "Ford",
         color: "verde",
         tipo: "Motocicleta"
       }
     }
 
-    const url = "http://10.214.64.255:8080/CitaCucei"
+    const url = "http://buoyant-dynamo-406200.uc.r.appspot.com/CitaCucei"
     const options = {
       method: 'POST',
       body: JSON.stringify(cita),

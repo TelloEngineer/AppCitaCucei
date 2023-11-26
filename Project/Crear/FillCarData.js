@@ -78,7 +78,6 @@ export default class FillCarData extends Component {
     super(props);
     this.state = {
       identificador: "",
-      marca: "",
       color: "",
       tipo: "",
       error: "",
@@ -99,9 +98,6 @@ export default class FillCarData extends Component {
   isEmpty = () => {
     if (this.state.identificador.trim() === "") {
       return "El campo identificador esta vacio";
-    }
-    if (this.state.marca.trim() === "") {
-      return "El campo marca esta vacio";
     }
     if (this.state.color.trim() === "") {
       return "El campo color esta vacio";
@@ -203,7 +199,6 @@ export default class FillCarData extends Component {
     return (
       <View style={stylesFormulario.fondo}>
         <Campo nombre={"Placa"} saveState={onChangeText("identificador")} />
-        <Campo nombre={"Marca"} saveState={onChangeText("marca")} />
         <Campo nombre={"Color"} saveState={onChangeText("color")} />
         <Select nombre={"Tipo de Citado"} saveState={onChangeText("tipo")} data={data}/>
       </View>

@@ -29,7 +29,7 @@ export default class Navegacion extends Component {
     const Nav = createNativeStackNavigator();
     return (
       <Nav.Navigator>
-        <Nav.Screen name="set" component={SetIdSearch}/>
+        <Nav.Screen name='setId' component={SetIdSearch}/>
         <Nav.Screen name='Busqueda' component={SearchAppointment} />
       </Nav.Navigator>
     );

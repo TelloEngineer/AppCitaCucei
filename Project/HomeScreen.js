@@ -22,13 +22,22 @@ export default class HomeScreen extends Component {
       const navigation = this.props.navigation;
       
       const Crear = () => {
-        console.log("diste click al boton prueba");
-        navigation.navigate("Crear");
+        console.log("diste click al boton Crear");
+        const navigation = this.props.navigation
+        const perfilData = {
+          entrada: "",
+          color: "",
+          fecha: "",
+          identificador: "",
+          tipo: "",
+
+        }
+        navigation.navigate("Crear", { perfilData });
       }
 
       const Editar = () => {
-        console.log("diste click al boton prueba");
-        navigation.navigate("Editar");
+        console.log("diste click al boton Editar");
+        navigation.navigate("Editar", );
       }
 
       const Boton = ({ text, descripcion, onpress: Function }) => {

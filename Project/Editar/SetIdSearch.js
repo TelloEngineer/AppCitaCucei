@@ -179,7 +179,7 @@ const stylesAccept = StyleSheet.create({
 
 const stylesFormulario = StyleSheet.create({
     fondo: {
-        height: 350,
+        height: 150,
         width: 350,
         borderRadius: 30,
         //justifyContent: 'space-around', //define la posicion, entre los elementos adentro (hijos)

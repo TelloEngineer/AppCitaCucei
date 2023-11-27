@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Modal, ImageBackgr
 import { SelectList } from 'react-native-dropdown-select-list'
 import DatePicker from 'react-native-date-picker'
 import {format} from "date-fns";
+import moment from 'moment';
 {/*
   placas: this.props.route.params.placas,
     marca: this.props.route.params.marca,
@@ -285,11 +286,11 @@ export default class FillAppointment extends Component {
 
   send = () => {
     check = this.isEmpty();
-    console.log(check);
+    //console.log(check);
     if (check != "") {
       this.setState({ stateError: true })
       this.setState({ error: check })
-      console.log(check);
+      //console.log(check);
     } else {
       this.setState({ stateError: false })
       this.sendCita();
@@ -306,7 +307,7 @@ export default class FillAppointment extends Component {
       { key: '2', value: '2' },
       { key: '3', value: '3' },
     ]
-    console.log(this.state.date + "  " + new Date());
+    
     defaultValue = value => e => e.value === value
     return (
       <View style={stylesFormulario.fondo}>
@@ -326,11 +327,17 @@ export default class FillAppointment extends Component {
   }
 
   componentDidMount() { // 
+    
     // initializing my state.
-    console.log("see: " + this.props.route.params.entrada)
+    
+   
     if (this.props.route.params.entrada) { // if exist
       this.setState({ ["entrada"]: this.props.route.params.entrada });
-      //this.setState({ ["date"]: this.props.route.params.fecha });
+
+      const dato = moment(this.props.route.params.fecha, 'DD/MM/YYYY HH:mm').format("YYYY-MM-DD HH:mm"); //lo convierte a ese formato
+      const date = new Date(Date.parse(dato)); //ya con formato valido, a tipo date
+      this.setState({ ["date"]: date});// solo lo paso
+      console.log(date);
     }
   }
 

@@ -219,24 +219,24 @@ export default class FillAppointment extends Component {
 
     const cita = {
       entrada: this.state.entrada,
+      color: this.props.route.params.color,
       cita: {
         fecha: format(this.state.date, "dd/MM/yyyy HH:mm")
       },
       citado: {
         identificador: this.props.route.params.identificador,
-        color: this.props.route.params.color,
         tipo: this.props.route.params.tipo,
-      }
+      },
     };
 
     const citaExample = {
       entrada: 2,
+      color: "verde",
       cita: {
         fecha: "22/11/2023 12:13"
       },
       citado: {
         identificador: "J134241",
-        color: "verde",
         tipo: "Motocicleta"
       }
     }
@@ -311,7 +311,7 @@ export default class FillAppointment extends Component {
     return (
       <View style={stylesFormulario.fondo}>
         <Fecha date={this.state.date} setDate={onChangeText("date")} open={this.state.open} setOpen={onChangeText("open")}/>
-        <Select nombre={"Entrada"} defaultV={data.find(defaultValue(this.state.tipo))} saveState={onChangeText("entrada")} data={data} etiqueta={"Numero de la entrada"}/>
+        <Select nombre={"Entrada"} defaultV={data.find(defaultValue(this.state.entrada.toString()))} saveState={onChangeText("entrada")} data={data} etiqueta={"Numero de la entrada"}/>
       </View>
 
     );
@@ -323,6 +323,15 @@ export default class FillAppointment extends Component {
         <Text style={{ "fontSize": 40 }}>Siguiente</Text>
       </TouchableOpacity>
     );
+  }
+
+  componentDidMount() { // 
+    // initializing my state.
+    console.log("see: " + this.props.route.params.entrada)
+    if (this.props.route.params.entrada) { // if exist
+      this.setState({ ["entrada"]: this.props.route.params.entrada });
+      //this.setState({ ["date"]: this.props.route.params.fecha });
+    }
   }
 
   render() {

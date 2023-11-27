@@ -87,6 +87,8 @@ export default class FillCarData extends Component {
       identificador: "",
       color: "",
       tipo: "",
+      entrada: "",
+      fecha: new Date(),
       error: "",
       stateError: false,
     };
@@ -98,7 +100,9 @@ export default class FillCarData extends Component {
       identificador: this.state.identificador,
       marca: this.state.marca,
       color: this.state.color,
-      tipo: this.state.tipo
+      tipo: this.state.tipo,
+      entrada: this.state.entrada,
+      fecha: this.state.fecha
     });
   }
 
@@ -203,7 +207,6 @@ export default class FillCarData extends Component {
       { key: '2', value: 'Persona' }
     ]
     defaultValue = value => e => e.value === value
-    console.log(data.find(defaultValue("Vehiculo")))
     return (
       <View style={stylesFormulario.fondo}>
         <Campo nombre={"Nombre o Placa"} dato={this.state.identificador} saveState={onChangeText("identificador")} etiqueta={"¿entrada vehicular o de personas?"}/>
@@ -214,18 +217,20 @@ export default class FillCarData extends Component {
     );
   }
 
-  initiliazer = () => {
-    console.log("prueba: " + this.props.route.params === undefined);
-    console.log("problema: " + this.props.route.params)
-    //this.setState({ ["identificador"]: this.props.route.params.identificador });
-    //this.setState({ ["color"]: this.props.route.params.color });
-    //this.setState({ ["tipo"]: this.props.route.params.tipo });
+  componentDidMount() { // 
+    // initializing my state.
+    console.log("see: " + this.props.route.params.perfilData)
+    if (this.props.route.params.perfilData){ // if exist
+      this.setState({ ["identificador"]: this.props.route.params.perfilData.identificador });
+      this.setState({ ["color"]: this.props.route.params.perfilData.color });
+      this.setState({ ["tipo"]: this.props.route.params.perfilData.tipo });
+      this.setState({ ["entrada"]: this.props.route.params.perfilData.entrada });
+      this.setState({ ["fecha"]: this.props.route.params.perfilData.fecha });
+    }
   }
-
   render() {
     const image = require("../../Imagenes/Carro.jpg");
     
-    this.initiliazer();
     return (
       <View style={stylesMain.container}>
         <ImageBackground source={image} resizeMode="cover" style={stylesMain.image}>

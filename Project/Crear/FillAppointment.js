@@ -227,7 +227,6 @@ export default class FillAppointment extends Component {
         .then(response => {
           console.log(response.statusText);
         })
-      console.log("delete " + this.props.route.params.toDelete);
     }
     
   }

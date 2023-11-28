@@ -30,7 +30,7 @@ export default class HomeScreen extends Component {
           fecha: "",
           identificador: "",
           tipo: "",
-
+          edit: false
         }
         navigation.navigate("Crear", { perfilData });
       }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, Modal } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list'
+import moment from 'moment';
 
 function Campo({ nombre, saveState, etiqueta, dato}) {
   return (
@@ -74,7 +75,7 @@ function Select ({nombre,saveState, data, etiqueta, defaultV}){
       data={data}
       search={false}
       defaultOption={defaultV}
-      save="value"
+      save='value'
     />
     </View>
   )
@@ -88,6 +89,7 @@ export default class FillCarData extends Component {
       color: "",
       tipo: "",
       entrada: "",
+      formatDate: "",
       fecha: new Date(),
       error: "",
       stateError: false,
@@ -96,13 +98,18 @@ export default class FillCarData extends Component {
 
   next = () => {
     const navigation = this.props.navigation;
+
+    this.props.route.params.perfilData.fecha
+
     navigation.navigate("Datos de la cita", {
       identificador: this.state.identificador,
       marca: this.state.marca,
       color: this.state.color,
       tipo: this.state.tipo,
       entrada: this.state.entrada,
-      fecha: this.state.fecha
+      fecha: this.state.fecha,
+      edit: this.props.route.params.perfilData.edit,
+      toDelete: this.state.formatDate
     });
   }
 
@@ -124,7 +131,7 @@ export default class FillCarData extends Component {
     if (check != "") {
       this.setState({ stateError: true })
       this.setState({ error: check})
-      console.log(this.state.stateError)
+      console.log(this.state.tipo);
     } else {
       this.setState({ stateError: false })
       this.next();
@@ -203,8 +210,8 @@ export default class FillCarData extends Component {
     };
 
     const data = [
-      { key: '1', value: 'Vehiculo' },
-      { key: '2', value: 'Persona' }
+      { key: 'Vehiculo', value: 'Vehiculo' },
+      { key: 'Persona', value: 'Persona' }
     ]
     defaultValue = value => e => e.value === value
     return (
@@ -213,7 +220,6 @@ export default class FillCarData extends Component {
         <Campo nombre={"Color"} dato={this.state.color} saveState={onChangeText("color")} etiqueta={"De la camiseta o el vehiculo"}/>
         <Select nombre={"Tipo de Citado"} defaultV={data.find(defaultValue(this.state.tipo))} saveState={onChangeText("tipo")} data={data} etiqueta={"¿sera por entrada vehicular?"}/>
       </View>
-
     );
   }
 
@@ -226,7 +232,12 @@ export default class FillCarData extends Component {
       this.setState({ ["tipo"]: this.props.route.params.perfilData.tipo });
       this.setState({ ["entrada"]: this.props.route.params.perfilData.entrada });
       this.setState({ ["fecha"]: this.props.route.params.perfilData.fecha });
+      // DD numero, dd nombre
+      const fecha = moment(this.props.route.params.perfilData.fecha, 'DD/MM/YYYY HH:mm').format("DD-MM-YYYY_HH:mm"); //lo convierte a ese formato
+      this.state.formatDate = '/' + fecha + '/' + this.props.route.params.perfilData.identificador; 
+      console.log("fecha: " + this.state.formatDate)
     }
+
   }
   render() {
     const image = require("../../Imagenes/Carro.jpg");

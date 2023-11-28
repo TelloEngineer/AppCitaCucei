@@ -39,7 +39,7 @@ export default class SearchAppointment extends Component {
       fecha: item.cita.fecha,
       identificador: item.citado.identificador,
       tipo: item.citado.tipo,
-
+      edit: true
     }
     navigation.navigate("Crear", {perfilData});
   }

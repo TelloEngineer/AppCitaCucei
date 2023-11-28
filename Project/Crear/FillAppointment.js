@@ -216,6 +216,22 @@ export default class FillAppointment extends Component {
       
   }
 
+  ifIsEdit = () =>{
+    if(this.props.route.params.edit){
+      const url = "https://buoyant-dynamo-406200.uc.r.appspot.com/CitaCucei" + this.props.route.params.toDelete
+      const options = {
+        method: 'DELETE'
+      }
+
+      fetch(url, options)
+        .then(response => {
+          console.log(response.statusText);
+        })
+      console.log("delete " + this.props.route.params.toDelete);
+    }
+    
+  }
+
   sendCita = () => {
 
     const cita = {
@@ -251,26 +267,27 @@ export default class FillAppointment extends Component {
       }
     }
 
-   
-      fetch(url, options)
-        .then(response => { 
-          if (!response.ok) { // si no hay conexion
-            // se salta al catch, manda un dato
-            throw new Error(response.statusText); //el status
-          }
-          return response.json(); //retorna el json (objeto)
-        })
-        .then(response => { //recibe el json (objeto)
-          //usas sus campos
-          this.setState({ code: response.code }) 
-          this.setState({ error: response.message })
-          this.returnHome();
-        })
-        .catch(err => { // recibe el error marcado al throw
-            this.setState({ stateError: true })
-            this.setState({ error: err.message }) 
-          }
-        )
+    this.ifIsEdit()
+    //this.ifIsEdit();
+    fetch(url, options)
+      .then(response => { 
+        if (!response.ok) { // si no hay conexion
+          // se salta al catch, manda un dato
+          throw new Error(response.statusText); //el status
+        }
+        return response.json(); //retorna el json (objeto)
+      })
+      .then(response => { //recibe el json (objeto)
+        //usas sus campos
+        this.setState({ code: response.code }) 
+        this.setState({ error: response.message })
+        this.returnHome();
+      })
+      .catch(err => { // recibe el error marcado al throw
+          this.setState({ stateError: true })
+          this.setState({ error: err.message }) 
+        }
+      )
     
   }
 
@@ -286,11 +303,9 @@ export default class FillAppointment extends Component {
 
   send = () => {
     check = this.isEmpty();
-    //console.log(check);
     if (check != "") {
       this.setState({ stateError: true })
       this.setState({ error: check })
-      //console.log(check);
     } else {
       this.setState({ stateError: false })
       this.sendCita();
@@ -337,7 +352,6 @@ export default class FillAppointment extends Component {
       const dato = moment(this.props.route.params.fecha, 'DD/MM/YYYY HH:mm').format("YYYY-MM-DD HH:mm"); //lo convierte a ese formato
       const date = new Date(Date.parse(dato)); //ya con formato valido, a tipo date
       this.setState({ ["date"]: date});// solo lo paso
-      console.log(date);
     }
   }
 

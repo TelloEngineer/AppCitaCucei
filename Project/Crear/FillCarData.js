@@ -219,7 +219,7 @@ export default class FillCarData extends Component {
 
   componentDidMount() { // 
     // initializing my state.
-    console.log("see: " + this.props.route.params.perfilData)
+    //console.log("see: " + this.props.route.params.perfilData)
     if (this.props.route.params.perfilData){ // if exist
       this.setState({ ["identificador"]: this.props.route.params.perfilData.identificador });
       this.setState({ ["color"]: this.props.route.params.perfilData.color });

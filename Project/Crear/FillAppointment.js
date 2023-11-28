@@ -253,22 +253,22 @@ export default class FillAppointment extends Component {
 
    
       fetch(url, options)
-        .then(response => {
-          if (!response.ok) {
-            this.setState({ stateError: true })
-            this.setState({ error: response.message })
-            throw new Error('Network error');
+        .then(response => { 
+          if (!response.ok) { // si no hay conexion
+            // se salta al catch, manda un dato
+            throw new Error(response.statusText); //el status
           }
-          return response.json();
+          return response.json(); //retorna el json (objeto)
         })
-        .then(response => {
-          this.setState({ code: response.code })
+        .then(response => { //recibe el json (objeto)
+          //usas sus campos
+          this.setState({ code: response.code }) 
           this.setState({ error: response.message })
           this.returnHome();
         })
-        .catch(err => {
+        .catch(err => { // recibe el error marcado al throw
             this.setState({ stateError: true })
-            this.setState({ error: err })
+            this.setState({ error: err }) 
           }
         )
     

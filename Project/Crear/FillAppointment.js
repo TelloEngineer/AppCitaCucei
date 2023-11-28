@@ -266,8 +266,6 @@ export default class FillAppointment extends Component {
       }
     }
 
-    this.ifIsEdit()
-    //this.ifIsEdit();
     fetch(url, options)
       .then(response => { 
         if (!response.ok) { // si no hay conexion
@@ -287,6 +285,7 @@ export default class FillAppointment extends Component {
           this.setState({ error: err.message }) 
         }
       )
+      this.ifIsEdit()
     
   }
 

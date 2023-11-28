@@ -242,7 +242,7 @@ export default class FillAppointment extends Component {
       }
     }
 
-    const url = "http://buoyant-dynamo-406200.uc.r.appspot.com/CitaCucei"
+    const url = "https://buoyant-dynamo-406200.uc.r.appspot.com/CitaCucei"
     const options = {
       method: 'POST',
       body: JSON.stringify(cita),
@@ -268,7 +268,7 @@ export default class FillAppointment extends Component {
         })
         .catch(err => { // recibe el error marcado al throw
             this.setState({ stateError: true })
-            this.setState({ error: err }) 
+            this.setState({ error: err.message }) 
           }
         )
     

@@ -12,7 +12,7 @@ export default class SearchAppointment extends Component {
 
   componentDidMount(){
 
-    const url = "http://buoyant-dynamo-406200.uc.r.appspot.com/CitaCucei/" + this.props.route.params.id
+    const url = "https://buoyant-dynamo-406200.uc.r.appspot.com/CitaCucei/" + this.props.route.params.id
     const options = {
       method: 'GET',
       headers: {

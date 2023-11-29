@@ -265,11 +265,13 @@ export default class FillAppointment extends Component {
         'Content-Type': 'application/json'
       }
     }
+    isUpdate = false;
 
     fetch(url, options)
       .then(response => { 
         if (!response.ok) { // si no hay conexion
           // se salta al catch, manda un dato
+          isUpdate = false;
           throw new Error(response.statusText); //el status
         }
         return response.json(); //retorna el json (objeto)
@@ -278,6 +280,7 @@ export default class FillAppointment extends Component {
         //usas sus campos
         this.setState({ code: response.code }) 
         this.setState({ error: response.message })
+        isUpdate = true;
         this.returnHome();
       })
       .catch(err => { // recibe el error marcado al throw
@@ -285,7 +288,9 @@ export default class FillAppointment extends Component {
           this.setState({ error: err.message }) 
         }
       )
-      this.ifIsEdit()
+      if(isUpdate){
+        this.ifIsEdit()
+      }
     
   }
 

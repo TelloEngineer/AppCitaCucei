@@ -226,7 +226,7 @@ export default class FillAppointment extends Component {
       }).join('') == Array.from(this.props.route.params.toDelete).map((x) => {
         return typeof x === 'string' ? x : '';
       }).join('');
-
+    if (this.props.route.params.edit){
       if(!comp){ // si la llave no es igual
         const url = "https://buoyant-dynamo-406200.uc.r.appspot.com/CitaCucei" + this.props.route.params.toDelete
         const options = {
@@ -239,7 +239,7 @@ export default class FillAppointment extends Component {
           })
         console.log(comp)
       }
-    
+    }
   }
 
   sendCita = () => {

@@ -108,7 +108,8 @@ export default class FillCarData extends Component {
       tipo: this.state.tipo,
       entrada: this.state.entrada,
       fecha: this.state.fecha,
-      toDelete: this.state.formatDate
+      toDelete: this.state.formatDate,
+      edit: this.props.route.params.perfilData.edit
     });
   }
 

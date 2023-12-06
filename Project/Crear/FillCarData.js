@@ -108,7 +108,6 @@ export default class FillCarData extends Component {
       tipo: this.state.tipo,
       entrada: this.state.entrada,
       fecha: this.state.fecha,
-      edit: this.props.route.params.perfilData.edit,
       toDelete: this.state.formatDate
     });
   }
@@ -235,7 +234,7 @@ export default class FillCarData extends Component {
       // DD numero, dd nombre
       const fecha = moment(this.props.route.params.perfilData.fecha, 'DD/MM/YYYY HH:mm').format("DD-MM-YYYY_HH:mm"); //lo convierte a ese formato
       this.state.formatDate = '/' + fecha + '/' + this.props.route.params.perfilData.identificador; 
-      console.log("fecha: " + this.state.formatDate)
+      //console.log("fecha: " + this.state.formatDate)
     }
 
   }

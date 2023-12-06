@@ -217,17 +217,28 @@ export default class FillAppointment extends Component {
   }
 
   ifIsEdit = () =>{
-    if(this.props.route.params.edit){
-      const url = "https://buoyant-dynamo-406200.uc.r.appspot.com/CitaCucei" + this.props.route.params.toDelete
-      const options = {
-        method: 'DELETE'
-      }
+    const fecha = format(this.state.date, "dd-MM-yyyy_HH:mm") //lo convierte a ese formato
+    let formatDate = '/' + fecha + '/' + this.props.route.params.identificador;
+    console.log("asdf fecha:" + formatDate + "" + this.props.route.params.toDelete)
+    // compara, letra por letra, para ver si son iguales.... es la manera mas facil...
+      let comp = Array.from(formatDate).map((x) => {
+        return typeof x === 'string' ? x : '';
+      }).join('') == Array.from(this.props.route.params.toDelete).map((x) => {
+        return typeof x === 'string' ? x : '';
+      }).join('');
 
-      fetch(url, options)
-        .then(response => {
-          console.log(response.statusText);
-        })
-    }
+      if(!comp){ // si la llave no es igual
+        const url = "https://buoyant-dynamo-406200.uc.r.appspot.com/CitaCucei" + this.props.route.params.toDelete
+        const options = {
+          method: 'DELETE'
+        }
+
+        fetch(url, options)
+          .then(response => {
+            console.log(response.statusText);
+          })
+        console.log(comp)
+      }
     
   }
 
@@ -265,13 +276,11 @@ export default class FillAppointment extends Component {
         'Content-Type': 'application/json'
       }
     }
-    isUpdate = false;
 
     fetch(url, options)
       .then(response => { 
         if (!response.ok) { // si no hay conexion
           // se salta al catch, manda un dato
-          isUpdate = false;
           throw new Error(response.statusText); //el status
         }
         return response.json(); //retorna el json (objeto)
@@ -280,7 +289,7 @@ export default class FillAppointment extends Component {
         //usas sus campos
         this.setState({ code: response.code }) 
         this.setState({ error: response.message })
-        isUpdate = true;
+        this.ifIsEdit()
         this.returnHome();
       })
       .catch(err => { // recibe el error marcado al throw
@@ -288,10 +297,7 @@ export default class FillAppointment extends Component {
           this.setState({ error: err.message }) 
         }
       )
-      if(isUpdate){
-        this.ifIsEdit()
-      }
-    
+      
   }
 
   isEmpty = () => {

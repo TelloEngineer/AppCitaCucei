@@ -10,8 +10,4 @@ create movil apps. this is the client for Cucei_Citas. both are
 for a project on school.
 
 ## Quick Start
-you need node.js
-first you need to install every dependency: 
-  npm install
-after that command, you can start the app:
-  npm start
+you need node.js, first you install every dependency with the command: npm install. after that command, you can start the app: npm start
